@@ -42,6 +42,7 @@ const factory = (Input, DatePickerDialog) => {
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
+      openDatepickerEvent: React.PropTypes.object,
       readonly: PropTypes.bool,
       sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
@@ -64,6 +65,10 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     componentWillReceiveProps (nextProps) {
+      if (!this.state.active && nextProps.openDatepickerEvent) {
+        this.handleInputClick(nextProps.openDatepickerEvent);
+      }
+
       if (nextProps.active !== this.props.active && this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }
